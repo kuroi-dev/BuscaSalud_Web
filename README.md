@@ -10,8 +10,10 @@ BuscaSalud es una aplicación web que permite encontrar fácilmente lugares de s
 - **Múltiples tipos de lugares**: Farmacias, hospitales, clínicas, dentistas, fisioterapeutas y veterinarias
 - **Mapa interactivo**: Visualiza los resultados en Google Maps con marcadores personalizados
 - **Información detallada**: Horarios, teléfonos, calificaciones, y enlaces para navegación
-- **Interfaz responsive**: Funciona perfecto en móviles y escritorio
+- **Interfaz responsive**: Funciona perfecto en móviles y escritorio con CSS nativo
 - **Arquitectura separada**: Backend Flask con API REST y frontend React
+- **Geolocalización automática**: Detecta tu ubicación actual automáticamente
+- **Coordenadas personalizadas**: Configurado para región de Los Ríos, Chile (-39.278719, -72.223317)
 
 ## 🏗️ Arquitectura del Proyecto
 
@@ -20,17 +22,20 @@ buscaSalud/
 ├── backend/                 # API Flask con patrón MVC
 │   ├── src/
 │   │   ├── controllers/    # Controladores de la API
-│   │   ├── services/       # Lógica de negocio
-│   │   ├── models/         # Modelos de datos
-│   │   └── utils/          # Utilidades y validadores
+│   │   ├── services/       # Lógica de negocio y Google Maps
+│   │   ├── utils/          # Utilidades y validadores
+│   │   └── config.py       # Configuración de la app
 │   ├── requirements.txt
+│   ├── .env                # Variables de entorno (no en git)
 │   └── app.py
-├── frontend/               # Aplicación React con Vite
+├── frontend/               # Aplicación React con Vite + CSS nativo
 │   ├── src/
 │   │   ├── components/     # Componentes React
-│   │   ├── utils/          # Utilidades del frontend
-│   │   └── App.jsx
+│   │   ├── App.jsx         # Componente principal
+│   │   └── App.css         # CSS nativo responsive
+│   ├── .env                # Variables de entorno frontend (no en git)
 │   └── package.json
+├── venv/                   # Entorno virtual Python (no en git)
 └── README.md
 ```
 
@@ -268,19 +273,54 @@ GET /api/health
 - Ve a Google Cloud Console → "APIs y servicios" → "Panel de control"
 - Revisa tu uso mensual para asegurarte de mantenerte en el tier gratuito
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ **Tecnologías Utilizadas**
 
 ### Backend
-- **Flask**: Framework web de Python
+- **Flask 3.0**: Framework web de Python moderno y minimalista
 - **googlemaps**: Cliente oficial de Google Maps para Python
-- **python-dotenv**: Gestión de variables de entorno
-- **flask-cors**: Manejo de CORS
+- **python-dotenv**: Gestión segura de variables de entorno
+- **flask-cors**: Manejo de CORS para API REST
 
 ### Frontend
-- **React**: Biblioteca de JavaScript para interfaces de usuario
-- **Vite**: Build tool y servidor de desarrollo
-- **Tailwind CSS**: Framework de CSS utilitario
+- **React 19**: Biblioteca de JavaScript para interfaces de usuario
+- **Vite 7**: Build tool y servidor de desarrollo ultrarrápido
+- **CSS Nativo**: Estilos customizados con variables CSS y @media queries responsive
 - **Heroicons**: Iconos SVG para React
+- **Google Maps JavaScript API**: Integración de mapas interactivos
+
+### Herramientas de Desarrollo
+- **Git**: Control de versiones
+- **Python Virtual Environment**: Aislamiento de dependencias
+- **ESBuild**: Bundler optimizado (integrado en Vite)
+
+## 🌍 **Configuración Regional**
+
+La aplicación está preconfigurada para la región de **Los Ríos, Chile**:
+- **Coordenadas de inicio**: -39.278719, -72.223317
+- **Área de cobertura**: Valdivia y alrededores
+- **Fácil personalización** para cualquier ubicación
+
+## 🎨 **Diseño CSS Nativo**
+
+El frontend utiliza **CSS puro** con características modernas:
+- ✅ **Variables CSS** para personalización fácil
+- ✅ **Grid system** responsivo customizado
+- ✅ **Flexbox** para layouts flexibles  
+- ✅ **@media queries** para responsive design
+- ✅ **Animaciones CSS** nativas
+- ✅ **Sin dependencias** de frameworks CSS
+
+### Breakpoints responsivos:
+```css
+/* Móvil */
+@media (max-width: 767px)
+
+/* Tablet */ 
+@media (min-width: 768px)
+
+/* Desktop */
+@media (min-width: 1024px)
+```
 
 ## 🤝 **Contribuir**
 
@@ -301,9 +341,31 @@ GET /api/health
 ### **📋 Checklist de diagnóstico:**
 - [ ] ¿Tienes las 3 APIs habilitadas en Google Cloud?
 - [ ] ¿Tu API Key está configurada sin restricciones o con IP?
-- [ ] ¿El backend muestra "Running on http://127.0.0.1:5000"?
-- [ ] ¿El frontend muestra "Local: http://localhost:5173/"?
+- [ ] ¿El backend muestra "🚀 Iniciando BuscaSalud Backend en puerto 5000"?
+- [ ] ¿El frontend muestra "➜ Local: http://localhost:5173/"?
 - [ ] ¿Los archivos .env tienen la misma API Key?
+- [ ] ¿El entorno virtual está activado? (ves `(venv)` en la terminal)
+
+## 📊 **Estado del Proyecto**
+
+### ✅ **Funcionalidades Implementadas**
+- [x] Búsqueda por ubicación y tipo de lugar
+- [x] Mapa interactivo con Google Maps
+- [x] Lista de resultados con información detallada
+- [x] Geolocalización automática
+- [x] Interfaz responsive con CSS nativo
+- [x] API REST completa con Flask
+- [x] Manejo de errores robusto
+- [x] Configuración de CORS
+- [x] Variables de entorno seguras
+
+### 🔮 **Funcionalidades Futuras**
+- [ ] Filtros avanzados (calificación, precio, distancia)
+- [ ] Guardar lugares favoritos
+- [ ] Compartir ubicaciones
+- [ ] Modo offline básico
+- [ ] Notificaciones de lugares cercanos
+- [ ] Multi-idioma (español/inglés)
 
 ## 📝 **Licencia**
 
@@ -320,11 +382,34 @@ Este proyecto está bajo la Licencia MIT.
 - ✅ **Mapa interactivo** con marcadores personalizados  
 - ✅ **Información completa** (horarios, teléfonos, ratings)
 - ✅ **Geolocalización automática**
-- ✅ **Interfaz responsive** (móvil y escritorio)
+- ✅ **Interfaz responsive** con CSS nativo puro
 - ✅ **Navegación directa** a Google Maps
 - ✅ **API REST completa** con arquitectura MVC
+- ✅ **Configurado para Chile** (región Los Ríos)
 
-### 🔥 **¿Necesitas ayuda?** 
+### 🚀 **Comandos Rápidos**
+
+```bash
+# Clonar y configurar
+git clone <tu-repo-url>
+cd buscaSalud
+python -m venv venv
+venv\Scripts\activate
+
+# Backend
+cd backend
+pip install -r requirements.txt
+# Configurar .env con tu API Key
+python app.py
+
+# Frontend (nueva terminal)
+cd frontend  
+npm install
+# Configurar .env con tu API Key
+npm run dev
+```
+
+### 🏥 **¿Necesitas ayuda?** 
 Abre un issue en el repositorio o contacta al desarrollador.
 
-**¡Disfruta encontrando lugares de salud cerca de ti! 🏥💊**
+**¡Disfruta encontrando lugares de salud cerca de ti! 🇨🇱💊**

@@ -164,18 +164,20 @@ const MapContainer = ({ center, places, userLocation }) => {
 
   if (!isLoaded) {
     return (
-      <div className="bg-white rounded-lg shadow-lg h-96 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando mapa...</p>
+      <div className="map-container">
+        <div className="map-content loading-container">
+          <div className="loading-spinner">
+            <div className="spinner-circle"></div>
+            <p className="empty-description">Cargando mapa...</p>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-      <div className="h-96 md:h-[500px]" ref={mapRef}></div>
+    <div className="map-container">
+      <div className="map-content" ref={mapRef}></div>
     </div>
   )
 }

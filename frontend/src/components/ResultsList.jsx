@@ -4,12 +4,12 @@ import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 const ResultsList = ({ results }) => {
   if (!results || results.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-        <div className="text-gray-400 mb-2">
-          <MapPinIcon className="h-12 w-12 mx-auto" />
+      <div className="card empty-state">
+        <div className="empty-icon">
+          <MapPinIcon />
         </div>
-        <p className="text-gray-600">No se encontraron lugares de salud</p>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="empty-title">No se encontraron lugares de salud</p>
+        <p className="empty-description">
           Intenta cambiar la ubicación o aumentar el radio de búsqueda
         </p>
       </div>
@@ -34,20 +34,20 @@ const ResultsList = ({ results }) => {
   }
 
   const renderRating = (rating, totalRatings) => {
-    if (!rating) return <span className="text-gray-500 text-sm">Sin calificaciones</span>
+    if (!rating) return <span className="rating-text">Sin calificaciones</span>
     
     return (
-      <div className="flex items-center space-x-1">
-        <div className="flex">
+      <div className="rating">
+        <div className="rating-stars">
           {[1, 2, 3, 4, 5].map((star) => (
             star <= Math.floor(rating) ? (
-              <StarIconSolid key={star} className="h-4 w-4 text-yellow-400" />
+              <StarIconSolid key={star} className="star star-filled" />
             ) : (
-              <StarIcon key={star} className="h-4 w-4 text-gray-300" />
+              <StarIcon key={star} className="star star-empty" />
             )
           ))}
         </div>
-        <span className="text-sm text-gray-600">
+        <span className="rating-text">
           {rating.toFixed(1)} ({totalRatings || 0})
         </span>
       </div>
@@ -69,47 +69,49 @@ const ResultsList = ({ results }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg">
-      <div className="p-4 border-b border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-800">
+    <div className="card">
+      <div className="results-header">
+        <h3 className="card-header">
           Resultados de búsqueda ({results.length})
         </h3>
       </div>
       
-      <div className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+      <div className="results-list">
         {results.map((place, index) => (
-          <div key={place.place_id || index} className="p-4 hover:bg-gray-50 transition-colors">
-            <div className="space-y-3">
+          <div key={place.place_id || index} className="result-item">
+            <div className="result-content">
               {/* Header */}
-              <div>
-                <h4 className="font-medium text-gray-900">{place.name}</h4>
-                <p className="text-sm text-blue-600">{getTypeLabel(place.types)}</p>
+              <div className="result-header-info">
+                <h4 className="result-name">{place.name}</h4>
+                <p className="result-type">{getTypeLabel(place.types)}</p>
               </div>
 
               {/* Rating */}
-              {renderRating(place.rating, place.user_ratings_total)}
+              <div className="rating">
+                {renderRating(place.rating, place.user_ratings_total)}
+              </div>
 
               {/* Address */}
-              <p className="text-sm text-gray-600 flex items-start space-x-1">
-                <MapPinIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />
+              <p className="result-address">
+                <MapPinIcon className="icon-sm" />
                 <span>{place.address}</span>
               </p>
 
               {/* Status */}
-              <div className="flex items-center space-x-4 text-sm">
+              <div className="result-status">
                 {place.open_now !== null && (
-                  <div className="flex items-center space-x-1">
-                    <ClockIcon className="h-4 w-4" />
-                    <span className={place.open_now ? 'text-green-600' : 'text-red-600'}>
+                  <div>
+                    <ClockIcon className="icon-sm" />
+                    <span className={place.open_now ? 'status-open' : 'status-closed'}>
                       {place.open_now ? 'Abierto' : 'Cerrado'}
                     </span>
                   </div>
                 )}
 
                 {place.price_level > 0 && (
-                  <div className="flex items-center space-x-1">
-                    <span className="text-gray-500">Precio:</span>
-                    <span className="text-green-600 font-medium">
+                  <div>
+                    <span>Precio: </span>
+                    <span className="status-open font-medium">
                       {'$'.repeat(place.price_level)}
                     </span>
                   </div>
@@ -117,18 +119,18 @@ const ResultsList = ({ results }) => {
               </div>
 
               {/* Actions */}
-              <div className="flex space-x-2">
+              <div className="result-actions">
                 <button
                   onClick={() => handleDirections(place)}
-                  className="flex-1 bg-blue-600 text-white text-sm py-2 px-3 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center space-x-1"
+                  className="btn btn-primary btn-small"
                 >
-                  <MapPinIcon className="h-4 w-4" />
+                  <MapPinIcon className="icon-sm" />
                   <span>Ir</span>
                 </button>
 
                 <button
                   onClick={() => window.open(`https://www.google.com/search?q=${encodeURIComponent(place.name + ' ' + place.address)}`)}
-                  className="flex-1 bg-gray-100 text-gray-700 text-sm py-2 px-3 rounded-md hover:bg-gray-200 transition-colors"
+                  className="btn btn-secondary btn-small"
                 >
                   Más info
                 </button>

@@ -2,22 +2,22 @@ import { HeartIcon } from '@heroicons/react/24/outline'
 
 const Header = () => {
   return (
-    <header className="bg-blue-600 text-white shadow-lg">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <HeartIcon className="h-8 w-8 text-red-300" />
+    <header className="header">
+      <div className="container">
+        <div className="header-content">
+          <div className="header-brand">
+            <HeartIcon className="header-icon" />
             <div>
-              <h1 className="text-2xl font-bold">BuscaSalud</h1>
-              <p className="text-blue-200 text-sm">Encuentra lugares de salud cerca de ti</p>
+              <h1 className="header-title">BuscaSalud</h1>
+              <p className="header-subtitle">Encuentra lugares de salud cerca de ti</p>
             </div>
           </div>
           
-          <nav className="hidden md:flex space-x-6">
-            <a href="#" className="hover:text-blue-200 transition-colors">
+          <nav className="header-nav">
+            <a href="#">
               Inicio
             </a>
-            <a href="#" className="hover:text-blue-200 transition-colors">
+            <a href="#">
               Acerca de
             </a>
           </nav>

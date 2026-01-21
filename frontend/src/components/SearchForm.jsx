@@ -29,46 +29,46 @@ const SearchForm = ({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">
+    <div className="card">
+      <h2 className="card-header">
         Buscar lugares de salud
       </h2>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="form">
         {/* Ubicación */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="form-group">
+          <label className="form-label">
             Ubicación
           </label>
-          <div className="flex space-x-2">
+          <div className="input-group">
             <input
               type="text"
               value={searchLocation}
               onChange={(e) => setSearchLocation(e.target.value)}
               placeholder="Ingresa una dirección o ciudad"
-              className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="form-input"
               required
             />
             <button
               type="button"
               onClick={onGetCurrentLocation}
-              className="px-3 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
+              className="btn btn-gray"
               title="Usar ubicación actual"
             >
-              <MapPinIcon className="h-5 w-5" />
+              <MapPinIcon className="icon" />
             </button>
           </div>
         </div>
 
         {/* Tipo de lugar */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="form-group">
+          <label className="form-label">
             Tipo de lugar
           </label>
           <select
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="form-select"
           >
             {Object.entries(healthTypes).map(([key, value]) => (
               <option key={key} value={key}>
@@ -79,8 +79,8 @@ const SearchForm = ({
         </div>
 
         {/* Radio de búsqueda */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="form-group">
+          <label className="form-label">
             Radio de búsqueda: {(searchRadius / 1000).toFixed(1)} km
           </label>
           <input
@@ -90,9 +90,9 @@ const SearchForm = ({
             step="1000"
             value={searchRadius}
             onChange={(e) => setSearchRadius(parseInt(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+            className="range-slider"
           />
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
+          <div className="range-labels">
             <span>1 km</span>
             <span>50 km</span>
           </div>
@@ -102,16 +102,16 @@ const SearchForm = ({
         <button
           type="submit"
           disabled={isLoading || !searchLocation.trim()}
-          className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
+          className="btn btn-primary btn-full"
         >
           {isLoading ? (
             <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              <div className="spinner-circle"></div>
               <span>Buscando...</span>
             </>
           ) : (
             <>
-              <MagnifyingGlassIcon className="h-5 w-5" />
+              <MagnifyingGlassIcon className="icon" />
               <span>Buscar</span>
             </>
           )}

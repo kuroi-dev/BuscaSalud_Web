@@ -13,7 +13,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [userLocation, setUserLocation] = useState(null)
-  const [mapCenter, setMapCenter] = useState({ lat: 4.7110, lng: -74.0721 }) // Bogotá por defecto
+  const [mapCenter, setMapCenter] = useState({ lat: -39.278719, lng: -72.223317 }) // Coordenadas de inicio personalizadas
 
   const handleSearch = async (location, type, radius) => {
     setIsLoading(true)
@@ -62,42 +62,44 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="app">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Panel de búsqueda */}
-          <div className="lg:col-span-1">
-            <SearchForm
-              searchLocation={searchLocation}
-              setSearchLocation={setSearchLocation}
-              selectedType={selectedType}
-              setSelectedType={setSelectedType}
-              searchRadius={searchRadius}
-              setSearchRadius={setSearchRadius}
-              onSearch={handleSearch}
-              onGetCurrentLocation={getCurrentLocation}
-              isLoading={isLoading}
-            />
-            
-            {/* Lista de resultados */}
-            <div className="mt-6">
-              {isLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <ResultsList results={searchResults} />
-              )}
+      <main className="main-content">
+        <div className="container">
+          <div className="grid">
+            {/* Panel de búsqueda */}
+            <div>
+              <SearchForm
+                searchLocation={searchLocation}
+                setSearchLocation={setSearchLocation}
+                selectedType={selectedType}
+                setSelectedType={setSelectedType}
+                searchRadius={searchRadius}
+                setSearchRadius={setSearchRadius}
+                onSearch={handleSearch}
+                onGetCurrentLocation={getCurrentLocation}
+                isLoading={isLoading}
+              />
+              
+              {/* Lista de resultados */}
+              <div className="results-container">
+                {isLoading ? (
+                  <LoadingSpinner />
+                ) : (
+                  <ResultsList results={searchResults} />
+                )}
+              </div>
             </div>
-          </div>
-          
-          {/* Mapa */}
-          <div className="lg:col-span-2">
-            <MapContainer
-              center={mapCenter}
-              places={searchResults}
-              userLocation={userLocation}
-            />
+            
+            {/* Mapa */}
+            <div>
+              <MapContainer
+                center={mapCenter}
+                places={searchResults}
+                userLocation={userLocation}
+              />
+            </div>
           </div>
         </div>
       </main>
