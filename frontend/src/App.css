@@ -576,3 +576,336 @@ body {
     padding: 0.875rem 1rem;
   }
 }
+
+/* FHIR and HL7 Components */
+.fhir-hl7-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.fhir-availability,
+.pharmacy-stock,
+.hl7-services {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.availability-header,
+.stock-header,
+.services-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.availability-header h4,
+.stock-header h4,
+.services-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-gray-800);
+}
+
+.fhir-badge,
+.hl7-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.availability-content,
+.stock-content,
+.services-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* FHIR Availability Styles */
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.wait-times h5 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--color-gray-600);
+}
+
+.wait-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5rem;
+}
+
+.wait-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: #f1f5f9;
+  border-radius: 0.5rem;
+}
+
+.wait-label {
+  font-size: 0.85rem;
+  color: var(--color-gray-600);
+}
+
+.wait-time {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.next-appointment {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #eff6ff;
+  border-radius: 0.5rem;
+  border-left: 3px solid var(--color-primary);
+  font-size: 0.85rem;
+}
+
+.availability-note {
+  padding: 0.5rem;
+  background: #f0f9ff;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-gray-600);
+}
+
+/* Pharmacy Stock Styles */
+.medications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.medication-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #fafafa;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.medication-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.medication-name {
+  font-weight: 500;
+  color: var(--color-gray-800);
+}
+
+.medication-stock {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.medication-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge.in-stock {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.low-stock {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.out-of-stock,
+.status-badge.unavailable {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.stock-footer {
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.update-time {
+  font-size: 0.75rem;
+  color: var(--color-gray-600);
+}
+
+/* HL7 Services Styles */
+.place-type-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #f8fafc;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.place-type-text {
+  font-weight: 500;
+  color: var(--color-gray-800);
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #fafafa;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.service-name {
+  font-weight: 500;
+  color: var(--color-gray-800);
+}
+
+.service-code {
+  font-size: 0.8rem;
+  color: var(--color-gray-600);
+  font-family: 'Courier New', monospace;
+}
+
+.service-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.services-summary {
+  padding: 0.5rem;
+  background: #f8fafc;
+  border-radius: 0.5rem;
+}
+
+.summary-stats {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--color-gray-600);
+}
+
+.hl7-info {
+  padding: 0.5rem;
+  background: #f0f9ff;
+  border-radius: 0.5rem;
+}
+
+.info-text {
+  font-size: 0.8rem;
+  color: var(--color-gray-600);
+  font-style: italic;
+}
+
+/* Loading and Error States for FHIR/HL7 */
+.loading-state,
+.error-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  color: var(--color-gray-600);
+  font-size: 0.9rem;
+}
+
+.error-state {
+  color: #dc2626;
+}
+
+/* Responsive Design for FHIR/HL7 Components */
+@media (max-width: 768px) {
+  .fhir-availability,
+  .pharmacy-stock,
+  .hl7-services {
+    padding: 0.75rem;
+    margin: 0.75rem 0;
+  }
+
+  .availability-header,
+  .stock-header,
+  .services-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .wait-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medication-item,
+  .service-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .summary-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

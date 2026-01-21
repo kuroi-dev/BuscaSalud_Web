@@ -4,10 +4,12 @@ Controlador para endpoints relacionados con lugares de salud
 from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
 from src.services.google_maps_service import GoogleMapsService
+from src.services.fhir_service import FHIRService
 from src.utils.validators import validate_search_params
 import logging
 
 health_bp = Blueprint('health', __name__, url_prefix='/api')
+fhir_service = FHIRService()
 logger = logging.getLogger(__name__)
 
 @health_bp.route('/search', methods=['GET'])
@@ -97,6 +99,65 @@ def health_check():
         'endpoints': {
             'search': '/api/search',
             'place_details': '/api/place/{place_id}',
-            'photo': '/api/photo/{photo_reference}'
-        }
+            'photo': '/api/photo/{photo_reference}',
+            'fhir_availability': '/api/fhir/availability/{place_id}',
+            'pharmacy_stock': '/api/fhir/pharmacy/{place_id}/stock',
+            'hl7_services': '/api/hl7/services/{place_type}'
+        },
+        'standards': ['FHIR 4.0.1', 'HL7 2.8']
     })
+
+@health_bp.route('/fhir/availability/<place_id>', methods=['GET'])
+@cross_origin()
+def get_fhir_availability(place_id):
+    """Obtener disponibilidad usando estándares FHIR"""
+    try:
+        availability = fhir_service.get_hospital_availability(place_id)
+        return jsonify({
+            'success': True,
+            'data': availability
+        }), 200
+    except Exception as e:
+        logger.error(f"Error al obtener disponibilidad FHIR: {str(e)}")
+        return jsonify({
+            'error': 'Error al consultar disponibilidad',
+            'message': str(e)
+        }), 500
+
+@health_bp.route('/fhir/pharmacy/<place_id>/stock', methods=['GET'])
+@cross_origin()
+def get_pharmacy_stock(place_id):
+    """Obtener stock de farmacia usando FHIR"""
+    try:
+        stock = fhir_service.get_pharmacy_stock(place_id)
+        return jsonify({
+            'success': True,
+            'data': stock
+        }), 200
+    except Exception as e:
+        logger.error(f"Error al obtener stock FHIR: {str(e)}")
+        return jsonify({
+            'error': 'Error al consultar stock',
+            'message': str(e)
+        }), 500
+
+@health_bp.route('/hl7/services/<place_type>', methods=['GET'])
+@cross_origin()
+def get_hl7_services(place_type):
+    """Obtener servicios disponibles usando HL7"""
+    try:
+        services = fhir_service.get_health_services_summary(place_type)
+        return jsonify({
+            'success': True,
+            'data': {
+                'place_type': place_type,
+                'services': services,
+                'hl7_standard': '2.8'
+            }
+        }), 200
+    except Exception as e:
+        logger.error(f"Error al obtener servicios HL7: {str(e)}")
+        return jsonify({
+            'error': 'Error al consultar servicios',
+            'message': str(e)
+        }), 500

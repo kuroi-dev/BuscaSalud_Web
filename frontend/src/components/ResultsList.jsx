@@ -1,5 +1,8 @@
 import { StarIcon, PhoneIcon, ClockIcon, MapPinIcon } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
+import FHIRAvailability from './FHIRAvailability'
+import PharmacyStock from './PharmacyStock'
+import HL7Services from './HL7Services'
 
 const ResultsList = ({ results }) => {
   if (!results || results.length === 0) {
@@ -135,12 +138,42 @@ const ResultsList = ({ results }) => {
                   Más info
                 </button>
               </div>
+
+              {/* FHIR/HL7 Integration */}
+              <div className="fhir-hl7-section">
+                {/* FHIR Availability for hospitals */}
+                {(place.types?.includes('hospital') || place.types?.includes('health')) && (
+                  <FHIRAvailability 
+                    placeId={place.place_id} 
+                    placeName={place.name} 
+                  />
+                )}
+                
+                {/* Pharmacy Stock for pharmacies */}
+                {place.types?.includes('pharmacy') && (
+                  <PharmacyStock placeId={place.place_id} />
+                )}
+                
+                {/* HL7 Services for all health places */}
+                <HL7Services 
+                  placeType={getPlaceType(place.types)} 
+                />
+              </div>
             </div>
           </div>
         ))}
       </div>
     </div>
   )
+
+  // Helper function to determine place type for HL7
+  function getPlaceType(types) {
+    if (types?.includes('hospital')) return 'hospital';
+    if (types?.includes('pharmacy')) return 'pharmacy';
+    if (types?.includes('dentist')) return 'dentist';
+    if (types?.includes('veterinary_care')) return 'veterinarian';
+    return 'clinic';
+  }
 }
 
 export default ResultsList
